@@ -1,0 +1,37 @@
+﻿@model List<WebApplication2.Models.Student>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<table  class="table">
+    <tr>
+        <td>Id</td>
+        <td>Fname</td>
+        <td>Lname</td>
+        <td>City</td>
+        <td>Edit</td>
+        
+        <td>Delete</td>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.fname</td>
+            <td>@item.lname</td>
+            <td>@item.city</td>
+
+            <td>
+               
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                
+            </td>
+            <td>@Html.ActionLink("Delete","Delete",new { id = item.Id })</td>
+            
+        </tr>
+        
+    }
+
+</table>
