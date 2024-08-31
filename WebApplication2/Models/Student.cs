@@ -18,5 +18,6 @@ namespace WebApplication2.Models
         public string fname { get; set; }
         public string lname { get; set; }
         public string city { get; set; }
+        public List<int> SelectedIds { get; set; } = new List<int>();
     }
 }

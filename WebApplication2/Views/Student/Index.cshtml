@@ -5,33 +5,44 @@
 
 <h2>Index</h2>
 
-<table  class="table">
+<table class="table">
     <tr>
+
         <td>Id</td>
         <td>Fname</td>
         <td>Lname</td>
         <td>City</td>
         <td>Edit</td>
-        
+
         <td>Delete</td>
+        <td>ChechBox</td>
+
     </tr>
     @foreach (var item in Model)
     {
-        <tr>
-            <td>@item.Id</td>
-            <td>@item.fname</td>
-            <td>@item.lname</td>
-            <td>@item.city</td>
+<tr>
+ 
+    <td>@item.Id</td>
+    <td>@item.fname</td>
+    <td>@item.lname</td>
+    <td>@item.city</td>
 
-            <td>
-               
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id })
-                
-            </td>
-            <td>@Html.ActionLink("Delete","Delete",new { id = item.Id })</td>
-            
-        </tr>
-        
+
+    <td>
+
+        @Html.ActionLink("Edit", "Registration", new { id = item.Id })
+
+    </td>
+    <td>@Html.ActionLink("Delete", "Delete", new { id = item.Id })</td>
+    <td><input type="checkbox" value="" /></td>
+</tr>
+
     }
 
+
 </table>
+
+<input type="button" value="Delete All" name="button">
+
+
+@Html.ActionLink("Registration","Registration")
