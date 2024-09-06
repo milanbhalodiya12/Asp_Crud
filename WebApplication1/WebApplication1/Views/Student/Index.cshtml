@@ -1,0 +1,200 @@
+﻿@model List<WebApplication1.Models.Student>
+@{
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 20px;
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+
+        h2 {
+            color: #495057;
+            margin-bottom: 20px;
+            font-size: 1.75rem;
+        }
+
+        .search-form {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #ffffff;
+            border-radius: 6px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+            .search-form label {
+                font-weight: 600;
+                margin-right: 10px;
+            }
+
+            .search-form input[type="text"] {
+                padding: 10px;
+                margin-right: 10px;
+                border: 2px solid #ced4da;
+                border-radius: 4px;
+                width: 250px;
+            }
+
+            .search-form button {
+                padding: 10px 20px;
+                background: linear-gradient(45deg, #007bff, #0056b3);
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 1rem;
+                transition: background 0.3s ease;
+            }
+
+                .search-form button:hover {
+                    background: linear-gradient(45deg, #0056b3, #003d7a);
+                }
+
+            .search-form a {
+                color: #007bff;
+                text-decoration: none;
+                font-size: 1rem;
+                font-weight: 600;
+            }
+
+                .search-form a:hover {
+                    text-decoration: underline;
+                }
+
+        .table-container {
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #ffffff;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        table, th, td {
+            border: 1px solid #dee2e6;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f1f3f5;
+        }
+
+        tr:hover {
+            background-color: #e9ecef;
+        }
+
+        button[type="submit"] {
+            padding: 12px 24px;
+            background: linear-gradient(45deg, #dc3545, #c82333);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s ease;
+        }
+
+            button[type="submit"]:hover {
+                background: linear-gradient(45deg, #c82333, #a71d2a);
+            }
+
+        .add-record {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(45deg, #28a745, #218838);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 1rem;
+            transition: background 0.3s ease;
+        }
+
+            .add-record:hover {
+                background: linear-gradient(45deg, #218838, #1e7e34);
+            }
+
+        .alert {
+            color: #dc3545;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Search Form -->
+    <form class="search-form" method="get" action="/Student/Index">
+        <label for="searchText">Search by First Name:</label>
+        <input type="text" id="searchText" name="searchText" value="@Request.QueryString["searchText"]" />
+        <button type="submit">Search</button>
+        <a href="/Student/Index">Clear</a>
+    </form>
+
+    <a href="/Student/insert" class="add-record">Add Record</a>
+
+    <form id="deleteForm" method="post" action="/Student/DeleteSelected">
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" id="selectAll" /></th>
+                        <th>ID</th>
+                        <th>Fname</th>
+                        <th>LName</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td><input type="checkbox" name="selectedIds" value="@item.Id" /></td>
+                            <td>@item.Id</td>
+                            <td>@item.fname</td>
+                            <td>@item.lname</td>
+                            <td>
+                                <a href="/Student/insert?id=@item.Id&mode=E">Edit</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <button type="submit" onclick="return deletealert()">Delete Records</button>
+    </form>
+
+    <script>
+        function deletealert() {
+            return confirm("Are you sure you want to delete the selected records?");
+        }
+
+        document.getElementById('selectAll').addEventListener('click', function () {
+            var checkboxes = document.querySelectorAll('input[name="selectedIds"]');
+            for (var checkbox of checkboxes) {
+                checkbox.checked = this.checked;
+            }
+        });
+    </script>
+</body>
+</html>
