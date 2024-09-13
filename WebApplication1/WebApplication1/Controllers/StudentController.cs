@@ -10,17 +10,27 @@ namespace WebApplication1.Controllers
     public class StudentController : Controller
     {
         // GET: Student
-        public ActionResult Index(string searchText = "")
+        public ActionResult Index(string searchText = "", string searchBy = "fname")
         {
             using (MyDBEntities db = new MyDBEntities())
             {
-                // Filter students based on searchText
-                var students = db.Students.ToList().Where(s => s.fname.Contains(searchText) || s.lname.Contains(searchText)); ;
-                
+                // Filter students based on searchText and searchBy
+                var students = db.Students.AsQueryable();
+
+                if (searchBy == "fname")
+                {
+                    students = students.Where(s => s.fname.Contains(searchText));
+                }
+                else if (searchBy == "lname")
+                {
+                    students = students.Where(s => s.lname.Contains(searchText));
+                }
+
                 List<Student> std = students.ToList();
                 return View(std);
             }
         }
+
 
         public ActionResult Delete(int id)
         {
